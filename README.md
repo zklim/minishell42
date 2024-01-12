@@ -5,5 +5,5 @@
 << = heredoc  
 \>> = append output  
 
-char *const = array of constant pointers  
-const char* =  array of pointers to constant characters
+char *const = constant pointers  
+const char* =  pointers to constant characters
