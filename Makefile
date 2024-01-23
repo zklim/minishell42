@@ -6,7 +6,7 @@
 #    By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 21:38:43 by zhlim             #+#    #+#              #
-#    Updated: 2024/01/23 17:15:47 by zhlim            ###   ########.fr        #
+#    Updated: 2024/01/23 18:38:59 by zhlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJSDIR				= build
 OBJSUBDIR			= $(addprefix $(OBJSDIR)/, executions)
 
 CC					= gcc
-CFLAGS				= -Wall -Werror -Wextra -g3
+CFLAGS				= -Wall -Werror -Wextra #-g3
 
 RM					= rm -rf
 
