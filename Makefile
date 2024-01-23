@@ -6,19 +6,20 @@
 #    By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 21:38:43 by zhlim             #+#    #+#              #
-#    Updated: 2024/01/12 21:56:43 by zhlim            ###   ########.fr        #
+#    Updated: 2024/01/23 17:15:47 by zhlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS				= $(addprefix $(SRCSDIR)/, $(addsuffix .c, execve))
+SRCS				= $(addprefix $(SRCSDIR)/, $(addsuffix .c, main executions/execve executions/builtins/echo))
 
 OBJS				= $(patsubst $(SRCSDIR)/%.c, $(OBJSDIR)/%.o, $(SRCS))
 
 SRCSDIR				= src
 OBJSDIR				= build
+OBJSUBDIR			= $(addprefix $(OBJSDIR)/, executions)
 
 CC					= gcc
-CFLAGS				= -Wall -Werror -Wextra #-g
+CFLAGS				= -Wall -Werror -Wextra -g3
 
 RM					= rm -rf
 
@@ -32,6 +33,7 @@ LIBPRINTF			= libft/ft_printf/libftprintf.a
 LIBPRINTFFLAGS		= -Llibft/ft_printf -lftprintf
 
 $(OBJSDIR)/%.o:		$(SRCSDIR)/%.c | $(OBJSDIR)
+					mkdir -p $(@D)
 					$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 all:				$(NAME) 
