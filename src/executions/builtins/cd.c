@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:30:20 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 19:28:16 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/25 19:55:51 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,43 @@ static char	*new_path(char *path, char *env_value)
 	return new_path;
 }
 
+static char	*sub_home(char *path)
+{
+	char	*print;
+	char	*env_value;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	env_value = getenv("HOME");
+	while (path[i] == env_value[i])
+		i++;
+	print = malloc(sizeof(char) * (ft_strlen(&path[i]) + 2));
+	if (!print)
+		return (NULL);
+	print[j++] = '~';
+	while (path[i] != '\0')
+		print[j++] = path[i++];
+	print[j] = '\0';
+	return (print);
+}
+
 void	ft_cd(char *path)
 {
 	static char	*prev_pwd;
 	char		*current_pwd;
 	char		*env_name;
+	char		*print;
+	int			print_to_shell;
 
+	print_to_shell = 0;
 	current_pwd = getcwd(NULL, 0);
 	if (prev_pwd == NULL)
+	{
 		prev_pwd = current_pwd;
+		print_to_shell = 1;
+	}
 	if (path == NULL)
 		path = getenv("HOME");
 	else if (*path == '$')
@@ -86,6 +114,12 @@ void	ft_cd(char *path)
 	{
 		free(prev_pwd);
 		prev_pwd = current_pwd;
-		printf("%s\n", getcwd(NULL, 0)); // for testing
+		// printf("%s\n", getcwd(NULL, 0)); // for testing
+		if (print_to_shell)
+		{
+			print = sub_home(getcwd(NULL, 0));
+			printf("%s\n", print);
+			free(print);
+		}
 	}
 }
