@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:12 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/23 18:25:29 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/25 19:29:44 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@
 int	main(int argc, char **argv, char **env) {
 	(void)argc;
 	(void)argv;
-	ft_echo("$?", 0, env);
+	(void)env;
 }

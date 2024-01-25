@@ -6,11 +6,17 @@
 #    By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 21:38:43 by zhlim             #+#    #+#              #
-#    Updated: 2024/01/23 18:38:59 by zhlim            ###   ########.fr        #
+#    Updated: 2024/01/25 17:32:26 by zhlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS				= $(addprefix $(SRCSDIR)/, $(addsuffix .c, main executions/execve executions/builtins/echo))
+SRCS				= $(addprefix $(SRCSDIR)/, \
+					$(addsuffix .c, \
+					main \
+						$(addprefix executions/, \
+						execve \
+							$(addprefix builtins/, \
+							echo pwd cd))))
 
 OBJS				= $(patsubst $(SRCSDIR)/%.c, $(OBJSDIR)/%.o, $(SRCS))
 
@@ -19,7 +25,7 @@ OBJSDIR				= build
 OBJSUBDIR			= $(addprefix $(OBJSDIR)/, executions)
 
 CC					= gcc
-CFLAGS				= -Wall -Werror -Wextra #-g3
+CFLAGS				= -Wall -Werror -Wextra -g
 
 RM					= rm -rf
 
