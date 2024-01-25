@@ -6,13 +6,13 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:51:18 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/23 18:34:28 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/25 19:56:24 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executions/builtins/echo.h"
 
-char	*get_env_key(char *env)
+static char	*get_env_key(char *env)
 {
 	char	*key;
 	int		i;
@@ -36,7 +36,7 @@ char	*get_env_key(char *env)
 	}
 }
 
-void	print_env_value(char *env)
+static void	print_env_value(char *env)
 {
 	int		i;
 
