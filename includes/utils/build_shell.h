@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   build_shell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 21:27:45 by zhlim            ###   ########.fr       */
+/*   Created: 2024/01/25 21:24:53 by zhlim             #+#    #+#             */
+/*   Updated: 2024/01/25 21:25:33 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BUILD_SHELL_H
+# define BUILD_SHELL_H
 
-# include "executions/execve.h"
-# include "executions/builtins/echo.h"
-# include "executions/builtins/pwd.h"
-# include "executions/builtins/cd.h"
-# include "executions/builtins/export.h"
-# include "executions/builtins/env.h"
-# include "utils/build_shell.h"
+# include "../libft/libft.h"
+
+typedef struct s_shell
+{
+	char	**env;
+}	t_shell;
+
+char	**build_env(char **env);
 
 #endif

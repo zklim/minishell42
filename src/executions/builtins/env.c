@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 21:27:45 by zhlim            ###   ########.fr       */
+/*   Created: 2024/01/25 21:20:43 by zhlim             #+#    #+#             */
+/*   Updated: 2024/01/25 21:22:27 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/executions/builtins/env.h"
 
-# include "executions/execve.h"
-# include "executions/builtins/echo.h"
-# include "executions/builtins/pwd.h"
-# include "executions/builtins/cd.h"
-# include "executions/builtins/export.h"
-# include "executions/builtins/env.h"
-# include "utils/build_shell.h"
+void	print_env(char **env)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+}

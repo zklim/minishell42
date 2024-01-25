@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 21:27:45 by zhlim            ###   ########.fr       */
+/*   Created: 2024/01/25 21:09:07 by zhlim             #+#    #+#             */
+/*   Updated: 2024/01/25 21:35:00 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/executions/builtins/export.h"
 
-# include "executions/execve.h"
-# include "executions/builtins/echo.h"
-# include "executions/builtins/pwd.h"
-# include "executions/builtins/cd.h"
-# include "executions/builtins/export.h"
-# include "executions/builtins/env.h"
-# include "utils/build_shell.h"
-
-#endif
+// void	ft_export(t_shell *shell)
+// {
+	
+// }
