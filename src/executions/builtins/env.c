@@ -6,13 +6,13 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:20:43 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 21:22:27 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/26 17:57:03 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executions/builtins/env.h"
 
-void	print_env(char **env)
+void	ft_env(char **env)
 {
 	int	i;
 

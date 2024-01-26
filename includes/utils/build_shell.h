@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:24:53 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 21:25:33 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/25 23:20:40 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_shell
 	char	**env;
 }	t_shell;
 
+int		ft_arrlen(char **arr);
 char	**build_env(char **env);
 
 #endif

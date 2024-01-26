@@ -1,41 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_shell.c                                      :+:      :+:    :+:   */
+/*   export2.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 21:24:23 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 23:20:30 by zhlim            ###   ########.fr       */
+/*   Created: 2024/01/26 17:33:36 by zhlim             #+#    #+#             */
+/*   Updated: 2024/01/26 17:47:19 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/utils/build_shell.h"
+#ifndef EXPORT2_H
+# define EXPORT2_H
 
-int	ft_arrlen(char **arr)
-{
-	int	i;
+# include "../../../libft/libft.h"
+# include "../../utils/build_shell.h"
+# include "./env.h"
 
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
-}
+void	add_to_env(t_shell *shell, char *addition);
 
-char		**build_env(char **env)
-{
-	char	**shell_env;
-	int		i;
-
-	i = 0;
-	shell_env = (char **)malloc(sizeof(char *) * (ft_arrlen(env) + 1));
-	if (!shell_env)
-		return NULL;
-	while (env[i])
-	{
-		shell_env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	shell_env[i] = NULL;
-	return (shell_env);
-}
+#endif

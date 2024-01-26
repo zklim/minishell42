@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:21:48 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 21:23:39 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/26 17:57:09 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include <stdio.h>
 
-void	print_env(char **env);
+void	ft_env(char **env);
 
 #endif

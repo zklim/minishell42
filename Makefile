@@ -6,7 +6,7 @@
 #    By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 21:38:43 by zhlim             #+#    #+#              #
-#    Updated: 2024/01/25 21:27:09 by zhlim            ###   ########.fr        #
+#    Updated: 2024/01/26 17:46:23 by zhlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS				= $(addprefix $(SRCSDIR)/, \
 						$(addprefix executions/, \
 						execve \
 							$(addprefix builtins/, \
-							echo pwd cd export env)) \
+							echo pwd cd export export2 env)) \
 						$(addprefix utils/, \
 						build_shell)))
 
