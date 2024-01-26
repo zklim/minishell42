@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:33:19 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 18:00:07 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/26 18:30:19 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,35 @@ static char	*check_before_dup(char *addition)
 		i++;
 	}
 	return add_equal_sign(addition);
+}
+
+void	print_export(char **env)
+{
+	int	i;
+	int	j;
+	int	skip;
+
+	i = 0;
+	skip = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[i][j])
+		{
+			if (env[i][j] == '_' && env[i][j + 1] == '=')
+			{
+				skip = 1;
+				break ;
+			}
+			write(1, &env[i][j], 1);
+			j++;
+			if (env[i][j - 1] == '=' && !env[i][j])
+				write(1, "''", 2);
+		}
+		if (!skip)
+			write(1, "\n", 1);
+		i++;
+	}
 }
 
 void	add_to_env(t_shell *shell, char *addition)

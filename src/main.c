@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:12 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 18:00:24 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/26 18:31:17 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,6 @@ int	main(int argc, char **argv, char **env) {
 	
 	(void)argc;
 	(void)argv;
+	shell.env = env;
+	ft_export(&shell, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:09:07 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 17:33:24 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/26 18:30:48 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	merge_sort(char **arr, int l, int r)
 static void	sort_and_print(char **env, int size)
 {
 	merge_sort(env, 0, size);
-	ft_env(env);
+	print_export(env);
 }
 
 void		ft_export(t_shell *shell, char *addition)
