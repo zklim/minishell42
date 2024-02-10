@@ -26,6 +26,4 @@ typedef	struct s_cmd
 	char	**env;
 }	t_cmd;
 
-void	execute_cmd(t_cmd *cmd);
-
 #endif

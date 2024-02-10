@@ -18,7 +18,7 @@ SRCS				= $(addprefix $(SRCSDIR)/, \
 							$(addprefix builtins/, \
 							echo pwd cd export export2 env unset)) \
 						$(addprefix utils/, \
-						build_shell)))
+						build_shell)))))
 
 OBJS				= $(patsubst $(SRCSDIR)/%.c, $(OBJSDIR)/%.o, $(SRCS))
 
@@ -27,7 +27,7 @@ OBJSDIR				= build
 OBJSUBDIR			= $(addprefix $(OBJSDIR)/, executions)
 
 CC					= gcc
-CFLAGS				= -Wall -Werror -Wextra -g
+CFLAGS				= -Wall -Werror -Wextra #-g3
 
 RM					= rm -rf
 
