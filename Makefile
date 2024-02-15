@@ -6,11 +6,19 @@
 #    By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 21:38:43 by zhlim             #+#    #+#              #
-#    Updated: 2024/01/23 18:38:59 by zhlim            ###   ########.fr        #
+#    Updated: 2024/01/26 19:35:20 by zhlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS				= $(addprefix $(SRCSDIR)/, $(addsuffix .c, main executions/execve executions/builtins/echo))
+SRCS				= $(addprefix $(SRCSDIR)/, \
+					$(addsuffix .c, \
+					main \
+						$(addprefix executions/, \
+						execve \
+							$(addprefix builtins/, \
+							echo pwd cd export export2 env unset)) \
+						$(addprefix utils/, \
+						build_shell)))))
 
 OBJS				= $(patsubst $(SRCSDIR)/%.c, $(OBJSDIR)/%.o, $(SRCS))
 
