@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:51:18 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 19:56:24 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/01/26 17:28:54 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*get_env_key(char *env)
 	}
 }
 
-static void	print_env_value(char *env)
+static void	ft_env_value(char *env)
 {
 	int		i;
 
@@ -65,7 +65,7 @@ void	ft_echo(char *str, int flag_n, char **env)
 				key = get_env_key(*env);
 				if (!ft_strncmp(key, str + 1, ft_strlen(key)))
 				{
-					print_env_value(*env);
+					ft_env_value(*env);
 					free(key);
 					break;
 				}
