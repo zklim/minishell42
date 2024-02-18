@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve.c                                           :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 20:04:17 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/12 21:31:01 by zhlim            ###   ########.fr       */
+/*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
+/*   Updated: 2024/01/26 19:34:10 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execve.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-void	execute_cmd(t_cmd *cmd) {
-	if (execve(cmd->path, cmd->args, cmd->env) == -1)
-	{
-		perror(strerror(errno));
-		exit(errno);
-	}
-}
+# include "executions/execve.h"
+# include "executions/builtins/echo.h"
+# include "executions/builtins/pwd.h"
+# include "executions/builtins/cd.h"
+# include "executions/builtins/export.h"
+# include "executions/builtins/env.h"
+# include "executions/builtins/unset.h"
+# include "utils/build_shell.h"
 
-int	main(void)
-{	
-	char	*path = "/bin/ls";
-	char	*args[] = {path ,"-l", NULL};
-	char	*env[] = {NULL};
-	t_cmd	cmd;
-	
-	cmd.path = path;
-	cmd.args = args;
-	cmd.env = env;
-	
-	execute_cmd(&cmd);
-
-	return 0;
-}
+#endif

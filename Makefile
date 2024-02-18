@@ -6,19 +6,28 @@
 #    By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 21:38:43 by zhlim             #+#    #+#              #
-#    Updated: 2024/01/12 21:56:43 by zhlim            ###   ########.fr        #
+#    Updated: 2024/01/26 19:35:20 by zhlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS				= $(addprefix $(SRCSDIR)/, $(addsuffix .c, execve))
+SRCS				= $(addprefix $(SRCSDIR)/, \
+					$(addsuffix .c, \
+					main \
+						$(addprefix executions/, \
+						execve \
+							$(addprefix builtins/, \
+							echo pwd cd export export2 env unset)) \
+						$(addprefix utils/, \
+						build_shell)))))
 
 OBJS				= $(patsubst $(SRCSDIR)/%.c, $(OBJSDIR)/%.o, $(SRCS))
 
 SRCSDIR				= src
 OBJSDIR				= build
+OBJSUBDIR			= $(addprefix $(OBJSDIR)/, executions)
 
 CC					= gcc
-CFLAGS				= -Wall -Werror -Wextra #-g
+CFLAGS				= -Wall -Werror -Wextra -g
 
 RM					= rm -rf
 
@@ -32,6 +41,7 @@ LIBPRINTF			= libft/ft_printf/libftprintf.a
 LIBPRINTFFLAGS		= -Llibft/ft_printf -lftprintf
 
 $(OBJSDIR)/%.o:		$(SRCSDIR)/%.c | $(OBJSDIR)
+					mkdir -p $(@D)
 					$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 all:				$(NAME) 
