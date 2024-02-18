@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:07:47 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 17:34:14 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/19 02:44:09 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPORT_H
 # define EXPORT_H
 
-# include "../../../libft/libft.h"
-# include "../../utils/build_shell.h"
-# include "./env.h"
-# include "./export2.h"
+# include "../../minishell.h"
 
-void	ft_export(t_shell *shell, char *addition);
+
+void	ft_export(t_data *shell, char *addition);
 
 #endif

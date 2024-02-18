@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:51:18 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 17:28:54 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/19 02:19:15 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executions/builtins/echo.h"
 
+// IMPORTANT: Print exit code yet to be implemented
 static char	*get_env_key(char *env)
 {
 	char	*key;
@@ -22,7 +23,7 @@ static char	*get_env_key(char *env)
 		i++;
 	key = (char *)malloc(sizeof(char) * i + 1);
 	if (!key)
-		return NULL;
+		return (NULL);
 	else
 	{
 		i = 0;
@@ -46,14 +47,12 @@ static void	ft_env_value(char *env)
 	ft_putstr_fd(env + i + 1, 1);
 }
 
-
-// IMPORTANT: Print exit code yet to be implemented
 void	ft_echo(char *str, int flag_n, char **env)
 {
 	char	*key;
 
 	if (!str || !*str)
-		return;
+		return ;
 	if (*str == '$')
 	{
 		if (*(str + 1) == '?')
@@ -67,7 +66,7 @@ void	ft_echo(char *str, int flag_n, char **env)
 				{
 					ft_env_value(*env);
 					free(key);
-					break;
+					break ;
 				}
 				free(key);
 				env = env + 1;
@@ -78,5 +77,5 @@ void	ft_echo(char *str, int flag_n, char **env)
 		ft_putstr_fd(str, 1);
 	if (!flag_n)
 		write(1, "\n", 1);
-	return;
+	return ;
 }
