@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.h                                           :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 21:07:47 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/19 02:44:09 by cocheong         ###   ########.fr       */
+/*   Created: 2024/01/24 17:04:24 by zhlim             #+#    #+#             */
+/*   Updated: 2024/02/19 02:23:49 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPORT_H
-# define EXPORT_H
+#include "../../includes/executions/builtins/pwd.h"
 
-# include "../../minishell.h"
-
-
-void	ft_export(t_data *shell, char *addition);
-
-#endif
+void	ft_pwd(void)
+{
+	char	*cwd;
+	
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return ;
+	printf("%s\n", cwd);
+	free(cwd);
+}

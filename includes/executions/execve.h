@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execve.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:07:28 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 21:08:43 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/19 02:28:43 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECVE_H
 # define EXECVE_H
 
-#include <stdio.h>
-#include <sys/errno.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include "../minishell.h"
 
-typedef	struct s_cmd
+typedef	struct	s_cmd
 {
 	char	*path;
 	char	**args;

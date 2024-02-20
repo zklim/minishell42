@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.h                                           :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
+/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 21:07:47 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/19 02:44:09 by cocheong         ###   ########.fr       */
+/*   Created: 2024/01/25 21:20:43 by zhlim             #+#    #+#             */
+/*   Updated: 2024/01/26 17:57:03 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPORT_H
-# define EXPORT_H
+#include "../../includes/executions/builtins/env.h"
 
-# include "../../minishell.h"
+void	ft_env(char **env)
+{
+	int	i;
 
-
-void	ft_export(t_data *shell, char *addition);
-
-#endif
+	i = 0;
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+}

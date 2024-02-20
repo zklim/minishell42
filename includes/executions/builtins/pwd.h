@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:04:41 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 17:11:44 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/19 02:27:45 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PWD_H
 # define PWD_H
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
+# include "../../minishell.h"
 
-void	ft_pwd();
+void	ft_pwd(void);
 
 #endif
