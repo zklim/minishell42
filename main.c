@@ -87,97 +87,97 @@ char	*trim_free(char *s1, char const *set)
 }
 
 // // Main function
-// int	main(int ac, char **av, char **envp)
-// {
-// 	// Initialize the data structure, the statement list, and the input string
-// 	t_data		data;
-// 	t_statement	*statement_list;
-// 	char		*input;
-
-// 	// If there are more than one arguments, exit with an error
-// 	if (av && ac > 1)
-// 		panic(NULL, CL_ARGUMENTS_ERR, EXIT_FAILURE);
-// 	// Set up the shell
-// 	setup_shell(envp, &data, &statement_list);
-// 	// Main loop
-// 	while (1)
-// 	{
-// 		// Get input from the user
-// 		input = get_input();
-// 		// If the input is not valid, continue to the next iteration
-// 		if (!valid_input(input, &data))
-// 			continue ;
-// 		// Add the input to the history
-// 		add_history(input);
-// 		// Expand the input
-// 		input = expander(input, &data);
-// 		// If the input is empty, free it and continue to the next iteration
-// 		if (!input[0])
-// 		{
-// 			free(input);
-// 			continue ;
-// 		}
-// 		// Parse the input into a statement list
-// 		statement_list = parser(input);
-// 		// Set the head of the list to the statement list
-// 		data.head = statement_list;
-// 		// Execute the type of statement
-		// exec_type(statement_list, &data);
-// 		// Clean up the parsed statement list
-// 		clean_parsed(&statement_list, &data);
-// 	}
-// 	// Return success
-// 	return (EXIT_SUCCESS);
-// }
-
-void print_statements(t_statement *head) 
+int	main(int ac, char **av, char **envp)
 {
-	t_statement *current = head;
-
-	while (current != NULL) {
-		// Assuming that your t_statement structure has a member named 'command'
-		// that is a null-terminated array of strings.
-		char **args = current->argv;
-		while (*args != NULL) {
-			printf("%s ", *args);
-			args++;
-		}
-		printf("\n");
-		current = current->next;
-	}
-}
-
-int main(int ac, char **av, char **envp) {
+	// Initialize the data structure, the statement list, and the input string
 	t_data		data;
 	t_statement	*statement_list;
 	char		*input;
 
+	// If there are more than one arguments, exit with an error
+	if (av && ac > 1)
+		panic(NULL, CL_ARGUMENTS_ERR, EXIT_FAILURE);
+	// Set up the shell
 	setup_shell(envp, &data, &statement_list);
-
-	while (1) {
-		char *input = get_input();
+	// Main loop
+	while (1)
+	{
+		// Get input from the user
+		input = get_input();
+		// If the input is not valid, continue to the next iteration
+		if (!valid_input(input, &data))
+			continue ;
+		// Add the input to the history
 		add_history(input);
-		if (input == NULL) {
-			fprintf(stderr, "Failed to get input\n");
-			return 1;
-		}
-
-		// If the user entered 'exit', break the loop
-		if (strcmp(input, "exit") == 0) {
+		// Expand the input
+		input = expander(input, &data);
+		// If the input is empty, free it and continue to the next iteration
+		if (!input[0])
+		{
 			free(input);
-			break;
+			continue ;
 		}
-
-		t_statement *statements = parser(input);
-		print_statements(statements);
-
-		// Don't forget to free the memory allocated by parser
-		// You might need to write a function to do this, depending on how your
-		// t_statement structure is defined.
-
-		free(input); // Assuming get_input allocates memory for the input
+		// Parse the input into a statement list
+		statement_list = parser(input);
+		// Set the head of the list to the statement list
+		data.head = statement_list;
+		// Execute the type of statement
+		exec_type(statement_list, &data);
+		// Clean up the parsed statement list
+		clean_parsed(&statement_list, &data);
 	}
-
-	return 0;
+	// Return success
+	return (EXIT_SUCCESS);
 }
+
+// void print_statements(t_statement *head) 
+// {
+// 	t_statement *current = head;
+
+// 	while (current != NULL) {
+// 		// Assuming that your t_statement structure has a member named 'command'
+// 		// that is a null-terminated array of strings.
+// 		char **args = current->argv;
+// 		while (*args != NULL) {
+// 			printf("%s ", *args);
+// 			args++;
+// 		}
+// 		printf("\n");
+// 		current = current->next;
+// 	}
+// }
+
+// int main(int ac, char **av, char **envp) {
+// 	t_data		data;
+// 	t_statement	*statement_list;
+// 	char		*input;
+
+// 	setup_shell(envp, &data, &statement_list);
+
+// 	while (1) {
+// 		char *input = get_input();
+// 		add_history(input);
+// 		if (input == NULL) {
+// 			fprintf(stderr, "Failed to get input\n");
+// 			return 1;
+// 		}
+
+// 		// If the user entered 'exit', break the loop
+// 		if (strcmp(input, "exit") == 0) {
+// 			free(input);
+// 			break;
+// 		}
+
+// 		t_statement *statements = parser(input);
+// 		print_statements(statements);
+
+// 		// Don't forget to free the memory allocated by parser
+// 		// You might need to write a function to do this, depending on how your
+// 		// t_statement structure is defined.
+
+// 		free(input); // Assuming get_input allocates memory for the input
+// 	}
+
+// 	return 0;
+// }
 

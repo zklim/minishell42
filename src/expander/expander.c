@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
+
+extern long long	g_exit_status;
 
 // Function to expand the exit status
 size_t	expand_exit_status(char *expanded_input_at_i, size_t *i)

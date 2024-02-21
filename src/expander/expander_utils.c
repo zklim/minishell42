@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
+
+extern long long	g_exit_status;
 
 // Function to initialize variables
 void	init_vars(size_t *i, size_t *size, bool *in_quotes, bool *in_dquotes)

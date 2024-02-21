@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 extern long long	g_exit_status;
 // Function to execute a command
@@ -20,5 +20,5 @@ void	exec_executables(t_statement *node, t_data *data)
 	if (builtin(node, data))
 		return ;
 	// If the command is not a built-in command, try to execute it as a binary command
-	cmd_binaries(node, data);
+	// cmd_binaries(node, data);
 }

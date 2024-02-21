@@ -37,5 +37,5 @@ void	destroy(t_data *data)
 	if (data->envp_vlst)
 		v_lstclear(&data->envp_vlst);
 	if (data->head)
-		p_lstclear(data->head);
+		p_lstclear(&data->head);
 }

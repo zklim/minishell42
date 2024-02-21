@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../includes/minishell.h"
 
 extern long long	g_exit_status;
 
@@ -52,7 +52,7 @@ static void	redirect_input(t_statement *node)
 	if (node->next->argv[0])
 	{
 		// Skip all input redirects
-		while (node->next->operator == RDR_INPUT)
+		while (node->next->token == RDR_INPUT)
 			node = node->next;
 		// If the file exists
 		if (access(node->next->argv[0], F_OK) == 0)
@@ -82,14 +82,14 @@ static void	redirect_output(t_statement *node)
 	// Close the standard output
 	close(STDOUT_FILENO);
 	// While the next operator is an output redirect
-	while (node->next->operator == RDR_OUT_REPLACE
-		|| node->next->operator == RDR_OUT_APPEND)
+	while (node->next->token == RDR_OUT_REPLACE
+		|| node->next->token == RDR_OUT_APPEND)
 	{
 		// If the operator is an output replace, open the file for writing and truncate it
-		if (node->operator == RDR_OUT_REPLACE)
+		if (node->token == RDR_OUT_REPLACE)
 			open(node->next->argv[0], O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		// If the operator is an output append, open the file for writing and append to it
-		else if (node->operator == RDR_OUT_APPEND)
+		else if (node->token == RDR_OUT_APPEND)
 			open(node->next->argv[0], O_WRONLY | O_APPEND | O_CREAT, 0666);
 		// Move to the next node
 		node = node->next;
@@ -97,10 +97,10 @@ static void	redirect_output(t_statement *node)
 		close(1);
 	}
 	// If the operator is an output replace, open the file for writing and truncate it
-	if (node->operator == RDR_OUT_REPLACE)
+	if (node->token == RDR_OUT_REPLACE)
 		open(node->next->argv[0], O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	// If the operator is an output append, open the file for writing and append to it
-	else if (node->operator == RDR_OUT_APPEND)
+	else if (node->token == RDR_OUT_APPEND)
 		open(node->next->argv[0], O_WRONLY | O_APPEND | O_CREAT, 0666);
 }
 
@@ -112,21 +112,21 @@ void	exec_redirects(t_statement *node, t_data *data)
 	// Save the current node
 	temp = node;
 	// If the operator is an input redirect, redirect the input
-	if (node->operator == RDR_INPUT)
+	if (node->token == RDR_INPUT)
 		redirect_input(node);
 	// If the operator is an input redirect until, redirect the input until a certain condition is met
-	else if (node->operator == RDR_INPUT_UNTIL)
+	else if (node->token == RDR_INPUT_UNTIL)
 		redirect_input_until(node);
 	// Otherwise, redirect the output
 	else
 		redirect_output(node);
 	// Set the operator of the temp node to none
-	temp->operator = NONE;
+	temp->token = NONE;
 	// While the operator is not none or a pipe, move to the next node
-	while (node->operator != NONE && node->operator != PIPE)
+	while (node->token != NONE && node->token != PIPE)
 		node = node->next;
 	// If the operator is none, execute the command
-	if (node->operator == NONE)
+	if (node->token == NONE)
 		exec_cmd(temp, data);
 	// Otherwise, execute the pipe
 	else

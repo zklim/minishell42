@@ -6,7 +6,7 @@
 /*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/21 20:40:43 by cocheong         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:05:35 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
+# include <fcntl.h>
 # include <dirent.h>
 # include <signal.h>
 # include <sys/stat.h>
@@ -88,7 +89,7 @@ typedef struct s_data
 {
 	char		**envp;
 	t_vlst		*envp_vlst;
-	t_statement	**head;
+	t_statement	*head;
 }				t_data;
 
 // Builtins
@@ -173,6 +174,8 @@ bool		unexpected_token(char token);
 char		*join_free(char *s1, char *s2);
 void		free_matrix(char **matrix);
 int			unset_var(char *var_name, t_vlst **head);
+char		*ft_lltoa(long long n);
+
 // Parser
 char		**parse_input(char *input);
 t_statement	*process_command(char **parsed, size_t *command_index,
@@ -198,6 +201,13 @@ static inline bool	is_absolute_path(t_statement *statement)
 	if (is_onstr(statement->argv[0], '/'))
 		return (true);
 	return (false);
+}
+
+static inline bool	single_dollar(char *input_at_i)
+{
+	return ((!input_at_i[1]
+			|| input_at_i[1] == ' '
+			|| input_at_i[1] == '\"'));
 }
 
 // Panic

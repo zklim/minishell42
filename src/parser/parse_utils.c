@@ -24,20 +24,15 @@ t_token	get_token(char *token)
 	if (!token)
 		op = NONE;
 	else if (streq(token, "|"))
-		printf("PIPE\n");
-		// op = PIPE;
+		op = PIPE;
 	else if (streq(token, ">>"))
-		// op = RDR_OUT_APPEND;
-		printf("RDR_OUT_APPEND\n");
+		op = RDR_OUT_APPEND;
 	else if (streq(token, ">"))
-		printf("RDR_OUT_REPLACE\n");
-		// op = RDR_OUT_REPLACE;
+		op = RDR_OUT_REPLACE;
 	else if (streq(token, "<<"))
-		printf("RDR_INPUT_UNTIL\n");
-		// op = RDR_INPUT_UNTIL;
+		op = RDR_INPUT_UNTIL;
 	else if (streq(token, "<"))
-		printf("RDR_INPUT\n");
-		// op = RDR_INPUT;
+		op = RDR_INPUT;
 	else
 		op = NONE;
 	free(token);

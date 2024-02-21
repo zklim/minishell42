@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 extern long long	g_exit_status;
 
@@ -39,7 +39,7 @@ void	exec_pipe(t_statement *node, t_data *data)
 	int		pipedes[2];
 	int		temp_status;
 
-	node->operator = NONE;
+	node->token = NONE;
 	if (pipe(pipedes) == -1)
 		panic(data, PIPE_ERR, EXIT_FAILURE);
 	child_pid = fork();
