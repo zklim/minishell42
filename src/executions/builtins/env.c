@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:20:43 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 17:57:03 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/21 03:57:51 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/executions/builtins/env.h"
+#include "../../../includes/minishell.h"
+
 
 void	ft_env(char **env)
 {

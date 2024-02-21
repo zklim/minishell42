@@ -6,21 +6,14 @@
 /*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/20 23:14:28 by cocheong         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:40:43 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "executions/execve.h"
-# include "executions/builtins/echo.h"
-# include "executions/builtins/pwd.h"
-# include "executions/builtins/cd.h"
-# include "executions/builtins/export.h"
-# include "executions/builtins/env.h"
-# include "executions/builtins/unset.h"
-# include "utils/build_shell.h"
+
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -33,6 +26,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include "../libft/libft.h"
 
 # define SUCCESS 0
 # define FAILURE -1
@@ -47,9 +41,22 @@
 # define PIPE_ERR "minishell: pipe() failed"
 # define FORK_ERR "minishell: fork() failed"
 
+// SYNTAX
+
 # define UNCLOSED_QUOTES "minishell: unclosed quotes"
 # define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `"
 # define SYTX_ERR_RDR "minishell: syntax error near unexpected token `newline'"
+
+// EXIT CMD
+
+# define EXIT_TOO_MANY_ARGS "minishell: exit: too many arguments"
+# define EXIT_NON_NUMERIC_ARG "minishell: exit: numeric argument required" 
+
+// CD CMD
+
+# define PATH_MAX	4096
+# define CD_TOO_MANY_ARGS "minishell: cd: too many arguments"
+# define OLDPWD_NOT_SET "minishell: cd: OLDPWD not set"
 
 typedef enum s_token
 {
@@ -84,8 +91,27 @@ typedef struct s_data
 	t_statement	**head;
 }				t_data;
 
+// Builtins
+// CD
+void		ft_cd(char *path);
+void		ft_pwd(void);
+// ECHO
+void		ft_echo(t_data *data, t_statement *stmt, int flag_n);
+// ENV
+void		ft_env(char **env);
+// EXPORT
+void		ft_export(t_data *shell, char *addition);
+void		print_export(char **env);
+void		add_to_env(t_data *shell, char *addition);
+// PWD
+void		ft_pwd(void);
+// UNSET
+void		ft_unset(t_statement *shell, char *str);
+
 void		cmd_binaries(t_statement *statement, t_data *data);
 void		exec_executables(t_statement *node, t_data *data);
+void		exec_type(t_statement *statement_list, t_data *data);
+void		exec_cmd(t_statement *current_node, t_data *data);
 void		exec_pipe(t_statement *node, t_data *data);
 void		exec_redirects(t_statement *node, t_data *data);
 bool		is_valid_id(char *str);
@@ -99,7 +125,7 @@ int			expanded_size(char *input, t_data *data);
 // Expander
 size_t		expand_exit_status(char *expanded_input_at_i, size_t *i);
 size_t		expand_variable(char *expanded_input_at_i, char *input,
-				size_t *i, t_data *data);
+						size_t *i, t_data *data);
 char		*expander(char *input, t_data *data);
 // Invalid_syntax
 bool		has_operator(char *input);
@@ -113,11 +139,6 @@ t_token		get_token(char *token);
 int			get_argc(char **argv);
 int			get_token_len(char *str);
 int			get_num_statements(char *input);
-// Parser
-char		**parse_input(char *input);
-t_statement	*process_command(char **parsed, size_t *command_index,
-				t_statement *current);
-t_statement	*parser(char *input);
 // Remove_quotes
 int			unclosed_quotes(char *str);
 char		*remove_quotes(char	*parsed);
@@ -149,6 +170,36 @@ bool		is_all_digits_or_signals(char *str);
 bool		is_onstr(const char *str, int ch);
 bool		streq(char *str1, char *str2);
 bool		unexpected_token(char token);
+char		*join_free(char *s1, char *s2);
+void		free_matrix(char **matrix);
+int			unset_var(char *var_name, t_vlst **head);
+// Parser
+char		**parse_input(char *input);
+t_statement	*process_command(char **parsed, size_t *command_index,
+						t_statement *current);
+t_statement	*parser(char *input);
+
+
+static inline int	cd_too_many_args(void)
+{
+	ft_putendl_fd(CD_TOO_MANY_ARGS, STDERR_FILENO);
+	return (EXIT_FAILURE);
+}
+
+static inline void	cmd_not_found(char *cmd_name)
+{
+	ft_putstr_fd(cmd_name, STDERR_FILENO);
+	ft_putendl_fd(": command not found", STDERR_FILENO);
+}
+
+// Utils
+static inline bool	is_absolute_path(t_statement *statement)
+{
+	if (is_onstr(statement->argv[0], '/'))
+		return (true);
+	return (false);
+}
+
 // Panic
 void		panic(t_data *data, char *error_msg, int exit_status);
 // Valid_input
@@ -158,8 +209,8 @@ void		child_signals(int signum);
 void		dismiss_signal(int signum);
 void		config_signals(void);
 void		setup_shell(char **envp, t_data *data,
-				t_statement **statement_list);
-
+						t_statement **statement_list);
+char		*trim_free(char *s1, char const *set);
 
 
 #endif

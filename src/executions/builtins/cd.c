@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:30:20 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 19:55:51 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/21 03:57:43 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/executions/builtins/cd.h"
+#include "../../../includes/minishell.h"
+
 
 static char	*get_env_name(char *path)
 {
@@ -44,7 +45,8 @@ static char	*new_path(char *path, char *env_value)
 	j = 0;
 	while (path[i] != '\0' && path[i] != '/')
 		i++;
-	new_path = malloc(sizeof(char) * (ft_strlen(&path[i]) + ft_strlen(env_value) + 1));
+	new_path = malloc(sizeof(char) * (ft_strlen(&path[i])
+				+ ft_strlen(env_value) + 1));
 	if (!new_path)
 		return (NULL);
 	while (env_value[j] != '\0')
@@ -58,7 +60,7 @@ static char	*new_path(char *path, char *env_value)
 		i++;
 		j++;
 	}
-	return new_path;
+	return (new_path);
 }
 
 static char	*sub_home(char *path)

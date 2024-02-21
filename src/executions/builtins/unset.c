@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 19:18:08 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 20:34:59 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/21 04:18:12 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/executions/builtins/unset.h"
+#include "../../../includes/minishell.h"
 
 static int	ft_strlen_equal(char *str)
 {
@@ -32,7 +32,7 @@ static char	**new_env(char ***env, int target)
 	j = 0;
 	new_env = (char **)malloc(sizeof(char *) * ft_arrlen(*env));
 	if (!new_env)
-		return NULL;
+		return (NULL);
 	while ((*env)[i])
 	{
 		if (i == target)
@@ -43,10 +43,10 @@ static char	**new_env(char ***env, int target)
 	}
 	new_env[j] = NULL;
 	free(*env);
-	return new_env;
+	return (new_env);
 }
 
-void		ft_unset(t_shell *shell, char *str)
+void	ft_unset(t_data *shell, char *str)
 {
 	int	i;
 	int	len;
@@ -54,15 +54,14 @@ void		ft_unset(t_shell *shell, char *str)
 
 	i = 0;
 	len = ft_strlen(str);
-	while (shell->env[i])
+	while (shell->envp[i])
 	{
-		len_2 = ft_strlen_equal(shell->env[i]);
+		len_2 = ft_strlen_equal(shell->envp[i]);
 		if (len == len_2)
 		{
-			if (ft_strncmp(shell->env[i], str, len) == 0)
-				shell->env = new_env(&shell->env, i);
+			if (ft_strncmp(shell->envp[i], str, len) == 0)
+				shell->envp = new_env(&shell->envp, i);
 		}
 		i++;
 	}
-	
 }

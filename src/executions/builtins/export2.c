@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: cocheong <cocheong@student.42kl.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 17:33:19 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 18:30:19 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/21 03:58:03 by cocheong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/executions/builtins/export2.h"
+#include "../../../includes/minishell.h"
+
 
 static char	*add_equal_sign(char *addition)
 {
@@ -20,7 +21,7 @@ static char	*add_equal_sign(char *addition)
 	i = 0;
 	new_str = (char *)malloc(sizeof(char) * (ft_strlen(addition) + 2));
 	if (!new_str)
-		return NULL;
+		return (NULL);
 	while (addition[i])
 	{
 		new_str[i] = addition[i];
@@ -42,7 +43,7 @@ static char	*check_before_dup(char *addition)
 			return (ft_strdup(addition));
 		i++;
 	}
-	return add_equal_sign(addition);
+	return (add_equal_sign(addition));
 }
 
 void	print_export(char **env)
@@ -74,23 +75,23 @@ void	print_export(char **env)
 	}
 }
 
-void	add_to_env(t_shell *shell, char *addition)
+void	add_to_env(t_data *shell, char *addition)
 {
 	int		i;
 	char	**new_env;
 
-	i = ft_arrlen(shell->env);
+	i = ft_strlen(*shell->envp);
 	new_env = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_env)
 		return ;
 	i = 0;
-	while (shell->env[i])
+	while (shell->envp[i])
 	{
-		new_env[i] = shell->env[i];
+		new_env[i] = shell->envp[i];
 		i++;
 	}
 	new_env[i++] = check_before_dup(addition);
 	new_env[i] = NULL;
-	free(shell->env);
-	shell->env = new_env;
+	free(shell->envp);
+	shell->envp = new_env;
 }
