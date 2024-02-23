@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:12 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/23 20:02:07 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/23 21:01:17 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_shell				shell;
 
-	sig_int = 0;
 	register_signals();
 	while (1)
 	{
