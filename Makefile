@@ -6,7 +6,7 @@
 #    By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 21:38:43 by zhlim             #+#    #+#              #
-#    Updated: 2024/01/26 19:35:20 by zhlim            ###   ########.fr        #
+#    Updated: 2024/02/23 19:21:43 by zhlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ SRCS				= $(addprefix $(SRCSDIR)/, \
 							$(addprefix builtins/, \
 							echo pwd cd export export2 env unset)) \
 						$(addprefix utils/, \
-						build_shell)))
+						build_shell) \
+						$(addprefix signals/, \
+						signals)))
 
 OBJS				= $(patsubst $(SRCSDIR)/%.c, $(OBJSDIR)/%.o, $(SRCS))
 
@@ -31,7 +33,8 @@ CFLAGS				= -Wall -Werror -Wextra -g
 
 RM					= rm -rf
 
-INCLUDES			= -Iincludes -Ilibft -Ilibft/ft_printf/include/ -Ilibft/get_next_line
+INCLUDES			= -Iincludes -Ilibft -Ilibft/ft_printf/include/ -Ilibft/get_next_line \
+						-I/opt/homebrew/opt/readline/include
 
 NAME				= minishell
 
@@ -39,15 +42,16 @@ LIBFT				= libft/libft.a
 LIBFTFLAGS			= -Llibft/ -lft
 LIBPRINTF			= libft/ft_printf/libftprintf.a
 LIBPRINTFFLAGS		= -Llibft/ft_printf -lftprintf
+LIBREADLINEFLAGS	= -L/opt/homebrew/opt/readline/lib -lreadline
 
 $(OBJSDIR)/%.o:		$(SRCSDIR)/%.c | $(OBJSDIR)
 					mkdir -p $(@D)
-					$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+					$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ 
 
 all:				$(NAME) 
 
 $(NAME):			$(OBJS)
-					$(CC) $(CFLAGS) $^ $(LIBFTFLAGS) $(LIBPRINTFFLAGS) -o $@
+					$(CC) $(CFLAGS) $^ $(LIBFTFLAGS) $(LIBPRINTFFLAGS) $(LIBREADLINEFLAGS) -o $@
 
 $(OBJS):			$(LIBFT) $(LIBPRINTF)
 

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/23 19:20:49 by zhlim            ###   ########.fr       */
+/*   Created: 2024/02/23 19:15:49 by zhlim             #+#    #+#             */
+/*   Updated: 2024/02/23 20:05:59 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-# include "executions/execve.h"
-# include "executions/builtins/echo.h"
-# include "executions/builtins/pwd.h"
-# include "executions/builtins/cd.h"
-# include "executions/builtins/export.h"
-# include "executions/builtins/env.h"
-# include "executions/builtins/unset.h"
-# include "utils/build_shell.h"
-# include "signals/signals.h"
+# include <signal.h>
+# include <termios.h>
+# include <stdio.h>
+# include <unistd.h>
+
+extern int	sig_int;
+
+void		register_signals(void);
 
 #endif
