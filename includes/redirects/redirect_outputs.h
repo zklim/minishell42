@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   redirect_outputs.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/23 23:57:39 by zhlim            ###   ########.fr       */
+/*   Created: 2024/02/23 23:39:54 by zhlim             #+#    #+#             */
+/*   Updated: 2024/02/24 00:04:59 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef REDIRECT_INPUTS_H
+# define REDIRECT_INPUTS_H
 
-# include "executions/execve.h"
-# include "executions/builtins/echo.h"
-# include "executions/builtins/pwd.h"
-# include "executions/builtins/cd.h"
-# include "executions/builtins/export.h"
-# include "executions/builtins/env.h"
-# include "executions/builtins/unset.h"
-# include "utils/build_shell.h"
-# include "signals/signals.h"
-# include "redirects/redirect_outputs.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <fcntl.h>
+
+int		redirect_outputs(int *save, char *file_name, int toAppend);
+void	restore_outputs(int *save, int file);
 
 #endif
