@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:15:21 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/23 23:33:00 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/24 00:44:18 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		term_echo_off(void)
 
 void	register_signals(void)
 {
-	sig_int = 0;
 	if (term_echo_off() == 1)
 		perror("failed to config terminal");
 	signal(SIGINT, signal_handler_int);
