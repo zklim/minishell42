@@ -99,14 +99,12 @@ t_token	get_token(char *token)
 	return (op);
 }
 
-int	handle_quotes(char **lexer_tokens, int i)
+t_lexer	*init_lexer(t_lexer *lexer)
 {
-	i++;
-	while ((*lexer_tokens)[i] != '\"' && (*lexer_tokens)[i] != '\0')
-		i++;
-	while ((*lexer_tokens)[i] != '\'' && (*lexer_tokens)[i] != '\0')
-		i++;
-	return (i);
+	lexer = malloc(sizeof(t_lexer));
+	lexer->lexer_tokens = NULL;
+	lexer->lexer_tokens_count = 0;
+	lexer->token = NONE;
 }
 
 void	process_token(t_lexer *line, t_lexer *tokens,
@@ -119,79 +117,53 @@ void	process_token(t_lexer *line, t_lexer *tokens,
 		(*j)++;
 	tokens->lexer_tokens = ft_substr(line->lexer_tokens, *j, *i - *j);
 	tokens->lexer_tokens_count++;
+	tokens->next = malloc(sizeof(t_lexer));
 	tokens = tokens->next;
 	*j = old_i;
 }
 
-int	lexer(t_lexer *line)
+int	handle_quotes(char *lexer_tokens, int i)
 {
-	int		i;
-	int		j;
-	int		counter;
-	t_lexer	*tokens;
+	i++;
+	if (lexer_tokens[i - 1] == '\"')
+	{
+		while (lexer_tokens[i] != '\"' && lexer_tokens[i] != '\0')
+			i++;
+	}
+	else if (lexer_tokens[i - 1] == '\'')
+	{
+		while (lexer_tokens[i] != '\'' && lexer_tokens[i] != '\0')
+			i++;
+	}
+	return (i);
+}
 
-	i = 0;
-	j = 0;
-	counter = 0;
+int lexer(t_lexer *line)
+{
+	int i, j, counter;
+	t_lexer *tokens, *head;
+
+	i = j = counter = 0;
 	tokens = malloc(sizeof(t_lexer));
+	tokens->lexer_tokens_count = 0;
+	tokens->next = NULL;
+	head = tokens;
+
 	while (line->lexer_tokens[i])
 	{
 		if (line->lexer_tokens[i] == '\"' || line->lexer_tokens[i] == '\'')
-			i = handle_quotes(&(line->lexer_tokens), i);
-		else if (line->lexer_tokens[i] == ' '
-			|| line->lexer_tokens[i + 1] == '\0')
-			process_token(line, tokens, &i, &j);
-		if (is_onstr(OPERATORS, line->lexer_tokens[i]))
+			i = handle_quotes(line->lexer_tokens, i);
+		else if (line->lexer_tokens[i] == ' ' || line->lexer_tokens[i + 1] == '\0')
 		{
-			tokens->token = get_token(line->lexer_tokens);
-			printf("%d\n", tokens->token);
+			process_token(line, tokens, &i, &j);
+			counter++;
+			printf("%s %d\n", tokens->lexer_tokens, counter);
 		}
 		if (line->lexer_tokens[i] != '\0')
 			i++;
-		counter++;
-		printf("%s %d\n", tokens->lexer_tokens, counter);
 	}
 	return (0);
 }
-
-// int	lexer(t_lexer *line)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		old_i;
-// 	int		counter;
-// 	t_lexer	*tokens;
-
-// 	i = 0;
-// 	j = 0;
-// 	old_i = 0;
-// 	counter = 0;
-// 	tokens = malloc(sizeof(t_lexer));
-// 	while (line->lexer_tokens[i])
-// 	{
-// 		if (line->lexer_tokens[i] == '\"')
-// 		{
-// 			i++;
-// 			while (line->lexer_tokens[i] != '\"' && line->lexer_tokens[i] != '\0')
-// 				i++;
-// 		}
-// 		else if (line->lexer_tokens[i] == ' ' || line->lexer_tokens[i + 1] == '\0')
-// 		{
-// 			old_i = i;
-// 			if (line->lexer_tokens[j] == ' ')
-// 				j++;
-// 			tokens->lexer_tokens = ft_substr(line->lexer_tokens, j, i - j);
-// 			tokens->lexer_tokens_count++;
-// 			tokens = tokens->next;
-// 			j = old_i;
-// 			counter++;
-// 			printf("%s %d\n", tokens->lexer_tokens, counter);
-// 		}
-// 		if (line->lexer_tokens[i] != '\0')
-// 			i++;
-// 	}
-// 	return (0);
-// }
 
 
 int main()
@@ -199,6 +171,7 @@ int main()
 	t_lexer *input;
 	size_t len = 0;
 
+	init_lexer(input);
 	printf("Enter a command: ");
 	getline(&input->lexer_tokens, &len, stdin);
 	printf("%s\n", input->lexer_tokens);
