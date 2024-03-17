@@ -22,23 +22,28 @@
 
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+t_parser_token	*parser(char **lexer_tokens);
 
 //Handle_quotes should go through the string and handle quotes
 // 1. If it finds a quote, it should go through the string and find the next quote
 // 2. It should then return the string between the quotes
 
-
-typedef enum s_token
+typedef struct s_quotes
 {
-	NONE,
-	PIPE,
-	RDR_OUT_APPEND,
-	RDR_OUT_REPLACE,
-	RDR_INPUT_UNTIL,
-	RDR_INPUT
-}	t_token;
+	int		i;
+	int		j;
+	int		len;
+	char	*start;
+	char	*end;
+	char	*quote;
+}	t_quotes;
+
 
 char	**ft_split(char const *s, char c);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *s1);
+size_t	ft_strlen(const char *s);
+
 
 bool	streq(char *str1, char *str2)
 {
@@ -56,87 +61,223 @@ bool	streq(char *str1, char *str2)
 	return (true);
 }
 
-bool	is_onstr(const char *str, int ch)
+bool	is_onstr(char *str, char *set)
 {
-	size_t	i;
+	int	i;
 
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (str[i])
+	while (str && *str)
 	{
-		if (str[i] == ch)
-			return (true);
-		i += 1;
+		i = 0;
+		while (set && set[i])
+		{
+			if (*str == set[i])
+				return (true);
+			i++;
+		}
+		str++;
 	}
 	return (false);
 }
 
-int skip_blankspace(char *lexer_tokens, int i)
+char	*ft_strcat(char *dest, const char *src)
 {
-	int	*j;
-	while (lexer_tokens[i] == ' ')
+	char	*ptr;
+
+	ptr = dest;
+	while (*ptr != '\0')
+		ptr++;
+	while (*src != '\0')
+		*ptr++ = *src++;
+	*ptr = '\0';
+	return (ptr);
+}
+
+// char	**adjust_tokens(char **lexer_tokens)
+// {
+// 	char	**adjusted;
+// 	int		adjusted_size;
+// 	int		i;
+
+// 	adjusted_size = 50;
+// 	adjusted = malloc(adjusted_size + 1, sizeof(*adjusted));
+// 	if(adjusted == NULL)
+// 		return (NULL);
+
+// 	return (0);
+// }
+
+// int	token_join_quotes(char ***lexer_tokens, int i)
+// {
+// 	char	*joined;
+// 	char	*tmp;
+// 	int		j;
+
+// 	joined = NULL;
+// 	j = i;
+// 	while ((*lexer_tokens)[j] && is_onstr(((*lexer_tokens)[j]), "\"\'"))
+// 	{
+// 		tmp = ft_strjoin(joined, (*lexer_tokens)[j]);
+// 		if (tmp == NULL)
+// 			return (0);
+// 		free(joined);
+// 		joined = tmp;
+// 		j++;
+// 	}
+// 	if (joined == NULL)
+// 		return (1);
+// 	(*lexer_tokens)[i] = joined;
+// 	while ((*lexer_tokens)[j])
+// 	{
+// 		(*lexer_tokens)[j] = (*lexer_tokens)[j + 1];
+// 		j++;
+// 	}
+// 	return (1);
+// }
+
+// int	join_quotes(char ***lexer_tokens)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (*lexer_tokens == NULL)
+// 		return (0);
+
+// 	while ((*lexer_tokens)[i])
+// 	{
+// 		if ((*lexer_tokens[i] && is_onstr(*lexer_tokens[i], "\"\'")))
+// 		{
+// 			if (token_join_quotes(lexer_tokens, i) == 0)
+// 				return (0);
+// 			else
+// 				if (is_onstr(*lexer_tokens[i], "\"\'") == false)
+// 					i += 2;
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	return (1);
+// }
+
+char	*join_tokens(char **tokens, int start, int end)
+{
+	char	*joined_token;
+	int		i;
+
+	joined_token = ft_strdup(tokens[start]);
+	i = start + 1;
+	while (i <= end)
 	{
+		joined_token = realloc(joined_token, ft_strlen(joined_token) + ft_strlen(tokens[i]) + 2);
+		ft_strcat(joined_token, " ");
+		ft_strcat(joined_token, tokens[i]);
 		i++;
+	}
+	return (joined_token);
+}
+
+int	handle_quotes(char **lexer_tokens, char **joined_tokens, int i, int *j)
+{
+	int		start;
+	char	quote_char;
+
+	quote_char = lexer_tokens[i][0];
+	start = i;
+	while (lexer_tokens[i] != NULL && lexer_tokens[i][ft_strlen(lexer_tokens[i]) - 1] != quote_char)
+		i++;
+	if (lexer_tokens[i] != NULL)
+	{
+		joined_tokens[*j] = join_tokens(lexer_tokens, start, i);
 		(*j)++;
 	}
-	return (*j);
+	return (i);
+}
+
+char	**join_quotes(char **lexer_tokens)
+{
+	char	**joined_tokens;
+	int		i;
+	int		j;
+
+	joined_tokens = malloc(MAX_TOKENS * sizeof(char *));
+	i = 0;
+	j = 0;
+	while (lexer_tokens[i] != NULL)
+	{
+		if (lexer_tokens[i][0] == '\'' || lexer_tokens[i][0] == '\"')
+		{
+			i = handle_quotes(lexer_tokens, joined_tokens, i, &j);
+			i++;
+		}
+		else
+		{
+			joined_tokens[j] = strdup(lexer_tokens[i]);
+			j++;
+			i++;
+		}
+	}
+	joined_tokens[j] = NULL;
+	free(lexer_tokens);
+	return (joined_tokens);
+}
+
+char	**get_tokens(char *input)
+{
+	char	**lexer_tokens;
+	int		i;
+	int		j;
+	int		len;
+
+	lexer_tokens = malloc(MAX_TOKENS * sizeof(char *));
+	i = 0;
+	j = 0;
+	len = 0;
+	while (input[i])
+	{
+		while (input[i] == ' ' && input[i] != '\0')
+			i++;
+		len = 0;
+		while (input[i + len] != ' ' && input[i + len] != '\0')
+			len++;
+		lexer_tokens[j] = ft_substr(input, i, len);
+		i += len;
+		printf("lexer_tokens[%d] = %s\n", j, lexer_tokens[j]);
+		j++;
+	}
+	lexer_tokens[j] = NULL;
+	return (lexer_tokens);
 }
 
 char	**lexer(char *input)
 {
 	char	**lexer_tokens;
-	int		i;
-	int		j;
-	int		k;
+	int		exit_status;
 
-	lexer_tokens = malloc(MAX_TOKENS * sizeof(char *));
-	i = 0;
-	j = 0;
-	k = 0;
-	lexer_tokens[i] = malloc(MAX_TOKEN_LEN * sizeof(char));
-	while (1)
-	{
-		if (input[j] == ' ' || input[j] == '\0')
-		{
-			lexer_tokens[i][k] = '\0';
-			i++;
-			lexer_tokens[i] = malloc(MAX_TOKEN_LEN * sizeof(char));
-			k = 0;
-		}
-		else
-		{
-			lexer_tokens[i][k] = input[j];
-			k++;
-		}
-		if (input[j] == '\0')
-			break ;
-		j++;
-	}
-	lexer_tokens[i] = NULL;
+	lexer_tokens = get_tokens(input);
+	lexer_tokens = join_quotes(lexer_tokens);
+	exit_status = parser(lexer_tokens);
 	return (lexer_tokens);
 }
 
-// int main() {
-// 	char input[256];
-// 	printf("Enter a command: ");
-// 	fgets(input, 256, stdin);
-// 	input[strcspn(input, "\n")] = 0;  // Remove trailing newline
+int main() {
+	char input[256];
+	printf("Enter a command: ");
+	fgets(input, 256, stdin);
+	input[strcspn(input, "\n")] = 0;  // Remove trailing newline
 
-// 	char **lexer_tokens = lexer(input);
+	char **lexer_tokens = lexer(input);
 
-// 	for (int i = 0; lexer_tokens[i] != NULL; i++) {
-// 		printf("lex_token[%d] = %s\n", i, lexer_tokens[i]);
-// 	}
+	for (int i = 0; lexer_tokens[i] != NULL; i++) {
+		printf("lex_token[%d] = %s\n", i, lexer_tokens[i]);
+	}
 
-// 	// Free the allocated memory
-// 	for (int i = 0; lexer_tokens[i] != NULL; i++) {
-// 		free(lexer_tokens[i]);
-// 	}
-// 	free(lexer_tokens);
+	// Free the allocated memory
+	for (int i = 0; lexer_tokens[i] != NULL; i++) {
+		free(lexer_tokens[i]);
+	}
+	free(lexer_tokens);
 
-// 	return 0;
-// }
+	return 0;
+}
 
 // This is a "part of" me. 
 // This
