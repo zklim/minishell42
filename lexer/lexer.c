@@ -22,27 +22,18 @@
 
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-t_parser_token	*parser(char **lexer_tokens);
 
 //Handle_quotes should go through the string and handle quotes
 // 1. If it finds a quote, it should go through the string and find the next quote
 // 2. It should then return the string between the quotes
-
-typedef struct s_quotes
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*start;
-	char	*end;
-	char	*quote;
-}	t_quotes;
 
 
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
+int		parser(char **lexer_tokens);
+
 
 
 bool	streq(char *str1, char *str2)
@@ -258,26 +249,26 @@ char	**lexer(char *input)
 	return (lexer_tokens);
 }
 
-int main() {
-	char input[256];
-	printf("Enter a command: ");
-	fgets(input, 256, stdin);
-	input[strcspn(input, "\n")] = 0;  // Remove trailing newline
+// int main() {
+// 	char input[256];
+// 	printf("Enter a command: ");
+// 	fgets(input, 256, stdin);
+// 	input[strcspn(input, "\n")] = 0;  // Remove trailing newline
 
-	char **lexer_tokens = lexer(input);
+// 	char **lexer_tokens = lexer(input);
 
-	for (int i = 0; lexer_tokens[i] != NULL; i++) {
-		printf("lex_token[%d] = %s\n", i, lexer_tokens[i]);
-	}
+// 	for (int i = 0; lexer_tokens[i] != NULL; i++) {
+// 		printf("lex_token[%d] = %s\n", i, lexer_tokens[i]);
+// 	}
 
-	// Free the allocated memory
-	for (int i = 0; lexer_tokens[i] != NULL; i++) {
-		free(lexer_tokens[i]);
-	}
-	free(lexer_tokens);
+// 	// Free the allocated memory
+// 	for (int i = 0; lexer_tokens[i] != NULL; i++) {
+// 		free(lexer_tokens[i]);
+// 	}
+// 	free(lexer_tokens);
 
-	return 0;
-}
+// 	return 0;
+// }
 
 // This is a "part of" me. 
 // This
