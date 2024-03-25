@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:12 by zhlim             #+#    #+#             */
-/*   Updated: 2024/03/25 17:49:15 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/03/26 00:36:54 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	main(int argc, char **argv, char **env)
 {
 	t_shell		shell;
 	char		*line;
-	// int			save;
-	// int			file;
+	int			save;
+	int			file;
 
 	sig_int = 0;
 	register_signals();
@@ -63,13 +63,11 @@ int	main(int argc, char **argv, char **env)
 		line = readline("input: ");
 		if (line == NULL)
 			exit(0);
+		file = redirect_outputs(&save, "output.txt", 1);
 		ft_echo(line, 0, env);
-		// file = redirect_outputs(&save, "output.txt", 0);
-		if (sig_int != 0)
-			break;
+		restore_outputs(&save, file);
 	}
-	// restore_outputs(&save, file);
-	// close(file);
+	close(file);
 	(void)argc;
 	(void)argv;
 	shell.env = build_env(env);

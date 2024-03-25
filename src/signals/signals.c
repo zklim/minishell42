@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:15:21 by zhlim             #+#    #+#             */
-/*   Updated: 2024/03/25 17:26:44 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/03/26 00:36:38 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	signal_handler_int(int sig)
 void	signal_handler_quit(int sig)
 {
 	(void)sig;
-	sig_int = 1;
 	return ;
 }
 
