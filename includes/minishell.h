@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/26 19:34:10 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/02/23 19:20:49 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 # include "executions/builtins/env.h"
 # include "executions/builtins/unset.h"
 # include "utils/build_shell.h"
+# include "signals/signals.h"
 
 #endif

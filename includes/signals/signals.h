@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve.h                                           :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 21:07:28 by zhlim             #+#    #+#             */
-/*   Updated: 2024/03/25 16:41:38 by zhlim            ###   ########.fr       */
+/*   Created: 2024/02/23 19:15:49 by zhlim             #+#    #+#             */
+/*   Updated: 2024/03/19 19:25:56 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECVE_H
-# define EXECVE_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-#include <stdio.h>
-#include <sys/errno.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include <signal.h>
+# include <termios.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <readline/readline.h>
 
-typedef	struct s_cmd
-{
-	char	*path;
-	char	**args;
-	char	**env;
-}	t_cmd;
+extern int	sig_int;
 
-void	execute_cmd(t_cmd *cmd);
+void		register_signals(void);
 
 #endif
