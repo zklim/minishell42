@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:07:28 by zhlim             #+#    #+#             */
-/*   Updated: 2024/01/25 21:08:43 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/03/25 16:41:38 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ typedef	struct s_cmd
 	char	**args;
 	char	**env;
 }	t_cmd;
+
+void	execute_cmd(t_cmd *cmd);
 
 #endif
