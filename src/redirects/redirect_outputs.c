@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 23:39:39 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/24 00:15:18 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/03/25 17:23:08 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ int		redirect_outputs(int *save, char *file_name, int toAppend)
 	*save = dup(STDOUT_FILENO);
 	file = open(file_name, options, 0644);
 	if (file < 0)
-	{
 		perror("failed to open file");
-		return file;
-	}
-	dup2(file, STDOUT_FILENO);
+	else if (dup2(file, STDOUT_FILENO) < 0)
+		perror("failed to redirect standard output");
 	return (file);
 }
 
