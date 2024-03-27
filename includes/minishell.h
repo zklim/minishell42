@@ -6,7 +6,7 @@
 /*   By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:22 by zhlim             #+#    #+#             */
-/*   Updated: 2024/02/23 23:57:39 by zhlim            ###   ########.fr       */
+/*   Updated: 2024/03/27 17:53:15 by zhlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 # include "executions/builtins/unset.h"
 # include "utils/build_shell.h"
 # include "signals/signals.h"
-# include "redirects/redirect_outputs.h"
+# include "redirects/redirections.h"
 
 #endif

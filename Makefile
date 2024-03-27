@@ -6,7 +6,7 @@
 #    By: zhlim <zhlim@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 21:38:43 by zhlim             #+#    #+#              #
-#    Updated: 2024/03/26 00:29:52 by zhlim            ###   ########.fr        #
+#    Updated: 2024/03/27 17:52:55 by zhlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS				= $(addprefix $(SRCSDIR)/, \
 						$(addprefix signals/, \
 						signals) \
 						$(addprefix redirects/, \
-						redirect_outputs)))
+						redirections)))
 
 OBJS				= $(patsubst $(SRCSDIR)/%.c, $(OBJSDIR)/%.o, $(SRCS))
 
