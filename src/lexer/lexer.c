@@ -10,64 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+// #include "../../includes/minishell.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define OPERATORS "|><"
 #define MAX_TOKENS 100
 #define MAX_TOKEN_LEN 50
 
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-
-//Handle_quotes should go through the string and handle quotes
-// 1. If it finds a quote, it should go through the string and find the next quote
-// 2. It should then return the string between the quotes
-
-
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 int		parser(char **lexer_tokens);
+void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n);
 
-
-
-bool	streq(char *str1, char *str2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	i;
-
-	if ((str1 && !str2) || (!str1 && str2))
-		return (false);
-	i = 0;
-	while (str1[i] || str2[i])
+	while (*s1 && (*s1 == *s2))
 	{
-		if (str1[i] != str2[i])
-			return (false);
-		i += 1;
+		s1++;
+		s2++;
 	}
-	return (true);
-}
-
-bool	is_onstr(char *str, char *set)
-{
-	int	i;
-
-	while (str && *str)
-	{
-		i = 0;
-		while (set && set[i])
-		{
-			if (*str == set[i])
-				return (true);
-			i++;
-		}
-		str++;
-	}
-	return (false);
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
 char	*ft_strcat(char *dest, const char *src)
@@ -83,71 +51,25 @@ char	*ft_strcat(char *dest, const char *src)
 	return (ptr);
 }
 
-// char	**adjust_tokens(char **lexer_tokens)
-// {
-// 	char	**adjusted;
-// 	int		adjusted_size;
-// 	int		i;
+void	*ft_realloc(void *ptr, size_t size)
+{
+	void	*new_ptr;
 
-// 	adjusted_size = 50;
-// 	adjusted = malloc(adjusted_size + 1, sizeof(*adjusted));
-// 	if(adjusted == NULL)
-// 		return (NULL);
-
-// 	return (0);
-// }
-
-// int	token_join_quotes(char ***lexer_tokens, int i)
-// {
-// 	char	*joined;
-// 	char	*tmp;
-// 	int		j;
-
-// 	joined = NULL;
-// 	j = i;
-// 	while ((*lexer_tokens)[j] && is_onstr(((*lexer_tokens)[j]), "\"\'"))
-// 	{
-// 		tmp = ft_strjoin(joined, (*lexer_tokens)[j]);
-// 		if (tmp == NULL)
-// 			return (0);
-// 		free(joined);
-// 		joined = tmp;
-// 		j++;
-// 	}
-// 	if (joined == NULL)
-// 		return (1);
-// 	(*lexer_tokens)[i] = joined;
-// 	while ((*lexer_tokens)[j])
-// 	{
-// 		(*lexer_tokens)[j] = (*lexer_tokens)[j + 1];
-// 		j++;
-// 	}
-// 	return (1);
-// }
-
-// int	join_quotes(char ***lexer_tokens)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (*lexer_tokens == NULL)
-// 		return (0);
-
-// 	while ((*lexer_tokens)[i])
-// 	{
-// 		if ((*lexer_tokens[i] && is_onstr(*lexer_tokens[i], "\"\'")))
-// 		{
-// 			if (token_join_quotes(lexer_tokens, i) == 0)
-// 				return (0);
-// 			else
-// 				if (is_onstr(*lexer_tokens[i], "\"\'") == false)
-// 					i += 2;
-// 		}
-// 		else
-// 			i++;
-// 	}
-// 	return (1);
-// }
+	if (!ptr)
+		return (malloc(size));
+	if (!size)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	new_ptr = malloc(size);
+	if (new_ptr)
+	{
+		ft_memcpy(new_ptr, ptr, size);
+		free(ptr);
+	}
+	return (new_ptr);
+}
 
 char	*join_tokens(char **tokens, int start, int end)
 {
@@ -158,7 +80,8 @@ char	*join_tokens(char **tokens, int start, int end)
 	i = start + 1;
 	while (i <= end)
 	{
-		joined_token = realloc(joined_token, ft_strlen(joined_token) + ft_strlen(tokens[i]) + 2);
+		joined_token = ft_realloc(joined_token, \
+			ft_strlen(joined_token) + ft_strlen(tokens[i]) + 2);
 		ft_strcat(joined_token, " ");
 		ft_strcat(joined_token, tokens[i]);
 		i++;
@@ -166,20 +89,55 @@ char	*join_tokens(char **tokens, int start, int end)
 	return (joined_token);
 }
 
+int	ft_str_ends_with(char *str, char *end)
+{
+	int	str_len;
+	int	end_len;
+
+	if (!str || !end)
+		return (0);
+	str_len = ft_strlen(str);
+	end_len = ft_strlen(end);
+	if (end_len > str_len)
+		return (0);
+	return (ft_strcmp(&str[str_len - end_len], end) == 0);
+}
+
+void	remove_last_char(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (len > 0)
+		str[len - 1] = '\0';
+}
+
 int	handle_quotes(char **lexer_tokens, char **joined_tokens, int i, int *j)
 {
-	int		start;
-	char	quote_char;
+	char	*temp;
+	char	*quote_type;
 
-	quote_char = lexer_tokens[i][0];
-	start = i;
-	while (lexer_tokens[i] != NULL && lexer_tokens[i][ft_strlen(lexer_tokens[i]) - 1] != quote_char)
-		i++;
-	if (lexer_tokens[i] != NULL)
+	if (lexer_tokens[i][0] == '\'')
+		quote_type = "'";
+	else
+		quote_type = "\"";
+	joined_tokens[*j] = ft_strdup(lexer_tokens[i] + 1);
+	while (lexer_tokens[++i] && !ft_str_ends_with(lexer_tokens[i], quote_type))
 	{
-		joined_tokens[*j] = join_tokens(lexer_tokens, start, i);
-		(*j)++;
+		temp = ft_strjoin(joined_tokens[*j], " ");
+		free(joined_tokens[*j]);
+		joined_tokens[*j] = ft_strjoin(temp, lexer_tokens[i]);
+		free(temp);
 	}
+	if (lexer_tokens[i])
+	{
+		temp = ft_strjoin(joined_tokens[*j], " ");
+		free(joined_tokens[*j]);
+		joined_tokens[*j] = ft_strjoin(temp, lexer_tokens[i]);
+		free(temp);
+		remove_last_char(joined_tokens[*j]);
+	}
+	(*j)++;
 	return (i);
 }
 
@@ -201,7 +159,7 @@ char	**join_quotes(char **lexer_tokens)
 		}
 		else
 		{
-			joined_tokens[j] = strdup(lexer_tokens[i]);
+			joined_tokens[j] = ft_strdup(lexer_tokens[i]);
 			j++;
 			i++;
 		}
